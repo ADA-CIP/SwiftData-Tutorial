@@ -6,18 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TodoLists: View {
-    @State var todoLists: [Todo] = Todo.data
-    @State var selectedTodo: Todo?
-    @State var isDetailPresented = false
+    @Environment(\.modelContext) var modelContext
+    @Query var todoList: [Todo]
     
     var body: some View {
-        List(todoLists) { todo in
-            Button {
-                selectedTodo = todo
-                isDetailPresented = true
-            } label: {
+        List(todoList) { todo in
+            NavigationLink(destination: TodoDetailView(todo: todo)) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(todo.title)
@@ -34,17 +31,11 @@ struct TodoLists: View {
             }
         }
         .navigationTitle("Todos")
-        .navigationDestination(isPresented: $isDetailPresented) {
-            TodoDetailView(todo: selectedTodo)
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    todoLists.append(Todo(
-                        title: "New Todo",
-                        createdAt: Date()
-                    ))
-                    isDetailPresented = true
+                    let todo = Todo(title: "New todo")
+                    modelContext.insert(todo)
                 }) {
                     Image(systemName: "plus")
                 }
@@ -55,4 +46,5 @@ struct TodoLists: View {
 
 #Preview {
     ContentView()
+        .modelContainer(AppModelContainer.container)
 }

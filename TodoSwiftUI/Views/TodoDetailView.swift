@@ -6,22 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TodoDetailView: View {
-    var todo: Todo?
+    @Bindable var todo: Todo
     
     @State var title: String = ""
-    @State var items: [TodoItem] = []
-    
     @State var newItemTitle: String = ""
     @State var showNewItemAlert: Bool = false
     
     var pendingOnly: [TodoItem] {
-        items.filter { !$0.completed }
+        todo.items.filter { !$0.completed }
     }
     
     var completedOnly: [TodoItem] {
-        items.filter { $0.completed }
+        todo.items.filter { $0.completed }
     }
     
     var body: some View {
@@ -29,13 +28,16 @@ struct TodoDetailView: View {
             Section {
                 TextField("Title", text: $title)
                     .font(.title2)
+                    .onChange(of: title) {
+                        todo.title = title
+                    }
             }
             
             Section {
                 ForEach(pendingOnly) { item in
                     Button(action: {
                         withAnimation(.spring()) {
-                            if let index = items.firstIndex(of: item) {
+                            if let index = todo.items.firstIndex(of: item) {
                                 finish(index: index)
                             }
                         }
@@ -57,7 +59,7 @@ struct TodoDetailView: View {
                     }
                 }
                 .onDelete { indexSet in
-                    items.remove(atOffsets: indexSet)
+                    todo.items.remove(atOffsets: indexSet)
                 }
             } header: {
                 Text("Pending")
@@ -68,7 +70,7 @@ struct TodoDetailView: View {
                 ForEach(completedOnly) { item in
                     Button(action: {
                         withAnimation(.spring()) {
-                            if let index = items.firstIndex(of: item) {
+                            if let index = todo.items.firstIndex(of: item) {
                                 unfinish(index: index)
                             }
                         }
@@ -99,7 +101,7 @@ struct TodoDetailView: View {
                     }
                 }
                 .onDelete { indexSet in
-                    items.remove(atOffsets: indexSet)
+                    todo.items.remove(atOffsets: indexSet)
                 }
             } header: {
                 Text("Completed")
@@ -111,9 +113,8 @@ struct TodoDetailView: View {
             TextField("Title", text: $newItemTitle)
             Button("Save", action: {
                 withAnimation(.spring()) {
-                    if !newItemTitle.isEmpty {
-                        items.append(TodoItem(title: newItemTitle))
-                    }
+                    todo.items.append(TodoItem(title: newItemTitle))
+//                    showNewItemAlert = false
                 }
             })
             Button("Cancel", role: .cancel) { }
@@ -130,23 +131,30 @@ struct TodoDetailView: View {
                 }
             }
         }
-        .onAppear {
-            title = todo?.title ?? ""
-            items = todo?.items ?? []
-        }
     }
     
     func finish(index: Int) {
-        items[index].finishedAt = Date()
-        items[index].completed.toggle()
+        
+        todo.items[index].finishedAt = Date()
+        todo.items[index].completed.toggle()
     }
     
     func unfinish(index: Int) {
-        items[index].finishedAt = nil
-        items[index].completed.toggle()
+        todo.items[index].finishedAt = nil
+        todo.items[index].completed.toggle()
     }
 }
 
 #Preview {
-    TodoDetailView(todo: Todo.data.first!)
+    
+    struct PreviewItem: View {
+        @Query var todos: [Todo]
+        
+        var body: some View {
+            TodoDetailView(todo: todos.first!)
+        }
+    }
+    
+    return PreviewItem()
+        .modelContainer(AppModelContainer.container)
 }

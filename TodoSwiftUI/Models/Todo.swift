@@ -6,32 +6,17 @@
 //
 
 import Foundation
+import SwiftData
 
-extension Todo {
-    static var data: [Todo] {
-        [
-            Todo(title: "Learn Swift", items: [
-                TodoItem(title: "Learn about SwiftUI"),
-                TodoItem(title: "Learn about Combine")
-            ]),
-            Todo(title: "Learn iOS", items: [
-                TodoItem(title: "Learn about UIKit"),
-                TodoItem(title: "Learn about Core Data")
-            ]),
-            Todo(title: "Learn Android", items: [
-                TodoItem(title: "Learn about Kotlin"),
-                TodoItem(title: "Learn about Jetpack")
-            ]),
-        ]
-    }
-}
-
-struct Todo: Identifiable {
-    var id: UUID = UUID()
+@Model class Todo: Identifiable {
     var title: String
     var createdAt: Date = Date()
     
-    var items: [TodoItem] = []
+    init(title: String) {
+        self.title = title
+    }
+    
+    @Relationship(deleteRule: .cascade) var items: [TodoItem] = []
     
     var createdAtString: String {
         let formatter = DateFormatter()

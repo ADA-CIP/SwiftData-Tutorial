@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import SwiftData
 
-struct TodoItem: Identifiable, Equatable {
-    var id: UUID = UUID()
+@Model class TodoItem: Identifiable, Equatable {
     var title: String
     var completed: Bool = false
     var createdAt: Date = Date()
     var finishedAt: Date?
+    
+    //@Relationship(inverse: Todo.self) var todo: Todo
+    
+    init(title: String) {
+        self.title = title
+    }
     
     var createdAtString: String {
         let formatter = DateFormatter()

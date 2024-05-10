@@ -18,6 +18,7 @@
 		25A8DD032BEDDCBE00B91F8F /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A8DD022BEDDCBE00B91F8F /* Todo.swift */; };
 		25A8DD052BEDDCE700B91F8F /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A8DD042BEDDCE700B91F8F /* TodoItem.swift */; };
 		25A8DD072BEDDD8000B91F8F /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A8DD062BEDDD8000B91F8F /* TodoDetailView.swift */; };
+		25A8DD092BEE168C00B91F8F /* AppModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A8DD082BEE168C00B91F8F /* AppModelContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		25A8DD022BEDDCBE00B91F8F /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		25A8DD042BEDDCE700B91F8F /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		25A8DD062BEDDD8000B91F8F /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
+		25A8DD082BEE168C00B91F8F /* AppModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			children = (
 				25A8DD022BEDDCBE00B91F8F /* Todo.swift */,
 				25A8DD042BEDDCE700B91F8F /* TodoItem.swift */,
+				25A8DD082BEE168C00B91F8F /* AppModelContainer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25A8DD052BEDDCE700B91F8F /* TodoItem.swift in Sources */,
+				25A8DD092BEE168C00B91F8F /* AppModelContainer.swift in Sources */,
 				25A8DD072BEDDD8000B91F8F /* TodoDetailView.swift in Sources */,
 				25A8DCD72BEDDC1700B91F8F /* ContentView.swift in Sources */,
 				25A8DD012BEDDC7B00B91F8F /* TodoLists.swift in Sources */,
